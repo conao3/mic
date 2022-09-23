@@ -127,7 +127,7 @@ NAME is temporarily added to PLIST on :name property."
                     ,@filters))
      (mic--plist-delete ,plist :name)))
 
-(cl-defmacro mic-defmic (name parent docstring &rest plist)
+(defmacro mic-defmic (name parent docstring &rest plist)
   "Define new `mic' named NAME derived from PARENT.
 DOCSTRING is docuent of it.
 FILTERS is list of filter, which recieve plist and return plist.
