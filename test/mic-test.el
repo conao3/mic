@@ -35,7 +35,7 @@
 (require 'edebug)
 
 (add-hook 'edebug-setup-hook (lambda () (print "EDEBUG!!!!!") (backtrace)))
-(defun edebug-after () (print "EDEBUG!!!!!") (backtrace))
+(defun edebug-after (&rest args) (print "EDEBUG!!!!!") (backtrace))
 
 (defmacro mic-ert-macroexpand-1 (name &rest args)
   "Define test named NAME.
