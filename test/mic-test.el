@@ -58,14 +58,30 @@ The test defined by this expands macro twice."
                           ',(cdr arg))))
         args)))
 
-(mic-ert-macroexpand-2 mic-autoload-interactive
-  ((mic package-name
-     :autoload-interactive
-     (find-file
-      write-file))
-   . (prog1 'package-name
-       (autoload #'find-file "package-name" nil t)
-       (autoload #'write-file "package-name" nil t))))
+;; (mic-ert-macroexpand-2 mic-autoload-interactive
+;;   ((mic package-name
+;;      :autoload-interactive
+;;      (find-file
+;;       write-file))
+;;    . (prog1 'package-name
+;;        (autoload #'find-file "package-name" nil t)
+;;        (autoload #'write-file "package-name" nil t))))
+
+(ert-deftest mic-autoload-interactive nil
+  (backtrace)
+  (should
+   (equal
+    (macroexpand-1
+     (macroexpand-1
+      '(mic package-name :autoload-interactive
+         (find-file write-file))))
+    '(prog1 'package-name
+       (autoload
+         (function find-file)
+         "package-name" nil t)
+       (autoload
+         (function write-file)
+         "package-name" nil t)))))
 
 (mic-ert-macroexpand-2 mic-autoload-noninteractive
   ((mic package-name
