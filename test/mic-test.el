@@ -34,7 +34,7 @@
 (require 'mic)
 (require 'edebug)
 
-(add-hook 'edebug-setup-hook (lambda () (print "EDEBUG!!!!!") (backtrace)))
+(add-hook 'edebug-setup-hook (lambda (&rest args) (print "EDEBUG!!!!!") (backtrace)))
 (defun edebug-after (&rest args) (print "EDEBUG!!!!!") (backtrace))
 
 (defmacro mic-ert-macroexpand-1 (name &rest args)
