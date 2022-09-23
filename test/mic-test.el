@@ -400,16 +400,28 @@ It return PLIST but each value on some property below is appended:
     (should (equal (plist-get result :foo) '(1 t)))
     (should (equal (plist-get result :bar) '(2 3 4)))))
 
-(mic-ert-macroexpand-1 mic-apply-filter
-  ((mic-apply-filter plist name-var
-     filter1
-     filter2
-     filter3)
-   . (progn
+;; (mic-ert-macroexpand-1 mic-apply-filter
+;;   ((mic-apply-filter plist name-var
+;;      filter1
+;;      filter2
+;;      filter3)
+;;    . (progn
+;;        (mic--plist-put plist :name name-var)
+;;        (setq plist
+;;              (thread-last plist filter1 filter2 filter3))
+;;        (mic--plist-delete plist :name))))
+
+(ert-deftest mic-apply-filter nil
+  (backtrace)
+  (should
+   (equal
+    (macroexpand-1
+     '(mic-apply-filter plist name-var filter1 filter2 filter3))
+    '(progn
        (mic--plist-put plist :name name-var)
        (setq plist
              (thread-last plist filter1 filter2 filter3))
-       (mic--plist-delete plist :name))))
+       (mic--plist-delete plist :name)))))
 
 (mic-ert-macroexpand-1 mic-defmic-macroexpand-1
   ((mic-defmic macro-name parent-name
